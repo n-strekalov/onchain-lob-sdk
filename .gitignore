@@ -1,0 +1,10 @@
+**/node_modules/
+**/dist/
+**/build/
+**/temp/
+coverage/
+*.log
+.eslintcache
+.env.local
+.DS_Store
+.env

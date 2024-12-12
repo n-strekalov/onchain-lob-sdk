@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src",
+    "tests",
+    "integration",
+    "example",
+    "node_example",
+    "jest.config.ts",
+    "eslint.config.mjs"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist"
+  ]
+}
