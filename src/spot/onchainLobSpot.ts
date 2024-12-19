@@ -53,6 +53,7 @@ import { OnchainLobSpotService, OnchainLobSpotWebSocketService } from '../servic
 import { ALL_MARKETS_ID } from '../services/constants';
 import { getLimitDetails } from './limitDetails';
 import { getMarketDetails } from './marketDetails';
+import { LPManagerContract, RfqOrder } from './LPManagerContract';
 
 /**
  * Options for configuring the OnchainLobSpot instance.
@@ -250,6 +251,7 @@ export class OnchainLobSpot implements Disposable {
   protected readonly cachedMarkets: Map<string, Market> = new Map();
   protected readonly mappers: typeof mappers;
   private cachedMarketsPromise: Promise<Market[]> | undefined = undefined;
+  private lpManagerContract?: LPManagerContract;
 
   constructor(options: Readonly<OnchainLobSpotOptions>) {
     this.signer = options.signer;
@@ -332,10 +334,16 @@ export class OnchainLobSpot implements Disposable {
    * @param {PlaceOrderSpotParams} params - The parameters for placing a new order.
    * @return {Promise<ContractTransactionResponse>} A Promise that resolves to the transaction response.
    */
-  async placeOrder(params: PlaceOrderSpotParams): Promise<ContractTransactionResponse> {
-    const marketContract = await this.getSpotMarketContract(params);
+  async placeOrder(params: PlaceOrderSpotParams, rfqOrder?: RfqOrder): Promise<ContractTransactionResponse> {
+    if (params.withVirtualLevels && rfqOrder) {
+      const lpManagerContract = await this.getLPManagerContract(params);
+      return lpManagerContract.placeRfqOrder(params, rfqOrder);
+    }
+    else {
+      const marketContract = await this.getSpotMarketContract(params);
 
-    return marketContract.placeOrder(params);
+      return marketContract.placeOrder(params);
+    }
   }
 
   /**
@@ -833,6 +841,27 @@ export class OnchainLobSpot implements Disposable {
     }
 
     return marketContract;
+  }
+
+  protected async getLPManagerContract(params: { market: string }): Promise<LPManagerContract> {
+    if (this.signer === null) {
+      throw new Error('Signer is not set');
+    }
+    let lpmContract = this.lpManagerContract;
+
+    if (!lpmContract) {
+      const market = await this.ensureMarket(params);
+
+      lpmContract = new LPManagerContract({
+        market,
+        signer: this.signer,
+        transferExecutedTokensEnabled: this.transferExecutedTokensEnabled,
+        autoWaitTransaction: this.autoWaitTransaction,
+      });
+      this.lpManagerContract = lpmContract;
+    }
+
+    return lpmContract;
   }
 
   protected attachEvents(): void {

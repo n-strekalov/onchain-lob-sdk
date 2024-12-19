@@ -23,6 +23,7 @@
     "default": "./dist/node/index.js"
   },
   "dependencies": {
+    "@pythnetwork/pyth-evm-js": "^1.82.0",
     "bignumber.js": "^9.1.2",
     "ethers": "^6.13.2",
     "lodash": "^4.17.21"
@@ -57,7 +58,7 @@
     "build:types": "tsc -p tsconfig.build.json",
     "jest": "jest",
     "test:unit": "jest src --runInBand",
-    "test:integration": "jest ./integration/ --config ./integration/jest.config.mjs --bail --runInBand",
+    "test:integration": "jest ./integration/tests/spotWithLPManager/addLiquidity.test.ts --config ./integration/jest.config.mjs --bail --runInBand",
     "watch": "npm run build -- -w",
     "check:types": "tsc -p tsconfig.json",
     "lint": "eslint ."

@@ -247,6 +247,14 @@ interface PlaceOrderBaseParams extends TransactionParams {
    * @optional
    */
   transferExecutedTokens?: boolean;
+
+  /**
+   * Whether to use virtual levels from LPManager contract.
+   *
+   * @type {boolean}
+   * @optional
+   */
+  withVirtualLevels?: boolean;
 }
 
 /**

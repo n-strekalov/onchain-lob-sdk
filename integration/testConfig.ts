@@ -3,14 +3,14 @@ import type { Market } from '../src';
 
 const testMarkets = {
   btcUsd: {
-    id: '0xecafa4a614552a85aeba08e0922b987dd51b86a4'.toLowerCase(),
+    id: '0x46fbd14b11891100f25a7b543bdfe68ff95a277f'.toLowerCase(),
     name: 'BTCUSDC',
     symbol: 'BTCUSDC',
     baseToken: {
-      id: '0x6ae2cde227dccf004e1f97f37281bdbf34a3536b'.toLowerCase(),
+      id: '0x92d81a25f6f46cd52b8230ef6cea5747bc3826db'.toLowerCase(),
       name: 'Bitcoin',
       symbol: 'BTC',
-      contractAddress: '0x6ae2cde227dccf004e1f97f37281bdbf34a3536b'.toLowerCase(),
+      contractAddress: '0x92d81a25f6f46cd52b8230ef6cea5747bc3826db'.toLowerCase(),
       decimals: 18,
       roundingDecimals: 8,
       supportsPermit: false,
@@ -18,17 +18,17 @@ const testMarkets = {
       fromOg: false,
     },
     quoteToken: {
-      id: '0x9a9983084ca42059152532ad27b94909eeaaa33b'.toLowerCase(),
+      id: '0x9626cc8790c547779551b5948029a4f646853f91'.toLowerCase(),
       name: 'USD Coin',
       symbol: 'USDC',
-      contractAddress: '0x9a9983084ca42059152532ad27b94909eeaaa33b'.toLowerCase(),
+      contractAddress: '0x9626cc8790c547779551b5948029a4f646853f91'.toLowerCase(),
       decimals: 6,
       roundingDecimals: 6,
       supportsPermit: false,
       iconUrl: null,
       fromOg: false,
     },
-    orderbookAddress: '0xecafa4a614552a85aeba08e0922b987dd51b86a4'.toLowerCase(),
+    orderbookAddress: '0x46fbd14b11891100f25a7b543bdfe68ff95a277f'.toLowerCase(),
     aggregations: expect.any(Array),
     rawLastPrice: expect.any(BigInt),
     lastPrice: expect.any(BigNumber),
@@ -61,6 +61,7 @@ export interface TestConfig {
   readonly rpcUrl: string;
   readonly chainId: number;
   readonly accountPrivateKey: string;
+  readonly mmPrivateKey: string;
   readonly onchainLobApiBaseUrl: string;
   readonly onchainLobWebsocketBaseUrl: string;
   readonly testMarkets: typeof testMarkets;
@@ -70,6 +71,7 @@ const envInfos = [
   ['RPC_URL', 'the RPC URL for EVM node'],
   ['CHAIN_ID', 'chain ID of the EVM network'],
   ['ACCOUNT_PRIVATE_KEY', 'the private key of the test account'],
+  ['MM_PRIVATE_KEY', 'the private key of the market maker account'],
   ['API_BASE_URL', 'the base URL for Onchain LOB API'],
   ['WEBSOCKET_BASE_URL', 'the base URL for Onchain LOB Websocket'],
 ] as const;
@@ -99,6 +101,7 @@ export const getTestConfig = (): TestConfig => {
     rpcUrl: env.RPC_URL,
     chainId: Number.parseInt(env.CHAIN_ID),
     accountPrivateKey: env.ACCOUNT_PRIVATE_KEY,
+    mmPrivateKey: env.MM_PRIVATE_KEY,
     onchainLobApiBaseUrl: env.API_BASE_URL,
     onchainLobWebsocketBaseUrl: env.WEBSOCKET_BASE_URL,
     testMarkets,
