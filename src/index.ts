@@ -40,6 +40,8 @@ export {
   type GetUserDepositsParams
 } from './spot';
 
+export { OnchainLobVault } from './vault';
+
 export type {
   Side,
   Direction,
