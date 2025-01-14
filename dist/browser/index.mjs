@@ -4012,12 +4012,12 @@ var MockVault = class {
       if (this.subscribeParams) {
         this.emitRandomVault();
       }
-    }, 3e4);
+    }, 7e3);
     setInterval(() => {
       if (this.subscribeParams) {
         this.emitRandomHistory();
       }
-    }, 32340);
+    }, 8340);
   }
   emitRandomVault() {
     this.events.vaultUpdated.emit([{
@@ -4059,7 +4059,7 @@ var MockVault = class {
   unsubscribeFromVaultUpdates() {
     this.subscribeParams = void 0;
   }
-  subscribeToVaultValueHistory() {
+  subscribeToVaultValueHistory(_params) {
     setTimeout(() => {
       this.emitHistory();
     }, 1500);
@@ -4082,11 +4082,13 @@ var MockVault = class {
   deposit(params) {
     setTimeout(() => {
       this.emitRandomVault();
+      this.emitRandomHistory();
     }, 1e3);
   }
   withdraw(params) {
     setTimeout(() => {
       this.emitRandomVault();
+      this.emitRandomHistory();
     }, 1e3);
   }
   async vaultInfo() {
@@ -4180,7 +4182,7 @@ var OnchainLobVault = class {
     this.mockVault.unsubscribeFromVaultUpdates();
   }
   subscribeToVaultValueHistory(params) {
-    this.mockVault.subscribeToVaultValueHistory();
+    this.mockVault.subscribeToVaultValueHistory(params);
   }
   unsubscribeFromVaultValueHistory() {
     this.mockVault.unsubscribeFromVaultValueHistory();
@@ -4202,7 +4204,7 @@ var OnchainLobVault = class {
   async withdraw(params) {
     this.mockVault.withdraw(params);
   }
-  async vaultInfo() {
+  async getVaultInfo() {
     return this.mockVault.vaultInfo();
   }
 };

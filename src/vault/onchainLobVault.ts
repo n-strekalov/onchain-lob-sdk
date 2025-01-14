@@ -103,7 +103,7 @@ export class OnchainLobVault {
   }
 
   subscribeToVaultValueHistory(params: SubscribeToVaultValueHistoryParams): void {
-    this.mockVault.subscribeToVaultValueHistory();
+    this.mockVault.subscribeToVaultValueHistory(params);
   }
 
   unsubscribeFromVaultValueHistory(): void {
@@ -146,7 +146,7 @@ export class OnchainLobVault {
     this.mockVault.withdraw(params);
   }
 
-  async vaultInfo(): Promise<VaultInfo> {
+  async getVaultInfo(): Promise<VaultInfo> {
     return this.mockVault.vaultInfo();
   }
 }

@@ -81,6 +81,6 @@ export declare class OnchainLobVault {
     calculateWithdrawDetailsSync(params: CalculateWithdrawDetailsSyncParams): WithdrawDetails;
     deposit(params: DepositParams): Promise<void>;
     withdraw(params: WithdrawParams): Promise<void>;
-    vaultInfo(): Promise<VaultInfo>;
+    getVaultInfo(): Promise<VaultInfo>;
 }
 export {};

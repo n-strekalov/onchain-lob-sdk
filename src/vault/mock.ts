@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import { VaultInfo } from '../models';
 import { EventEmitter } from '../common';
-import { CalculateDepositDetailsSyncParams, CalculateWithdrawDetailsSyncParams, DepositDetails, DepositParams, SubscribeToVaultUpdatesParams, WithdrawDetails, WithdrawParams } from './params';
+import { CalculateDepositDetailsSyncParams, CalculateWithdrawDetailsSyncParams, DepositDetails, DepositParams, SubscribeToVaultUpdatesParams, SubscribeToVaultValueHistoryParams, WithdrawDetails, WithdrawParams } from './params';
 import { VaultUpdate, VaultValueHistoryUpdate } from '../models';
 
 export class MockVault {
@@ -13,12 +13,12 @@ export class MockVault {
       if (this.subscribeParams) {
         this.emitRandomVault();
       }
-    }, 30000);
+    }, 7000);
     setInterval(() => {
       if (this.subscribeParams) {
         this.emitRandomHistory();
       }
-    }, 32340);
+    }, 8340);
   }
 
   private emitRandomVault(): void {
@@ -72,7 +72,7 @@ export class MockVault {
     this.subscribeParams = undefined;
   }
 
-  subscribeToVaultValueHistory(): void {
+  subscribeToVaultValueHistory(_params: SubscribeToVaultValueHistoryParams): void {
     setTimeout(() => {
       this.emitHistory();
     }, 1500);
@@ -99,12 +99,14 @@ export class MockVault {
   deposit(params: DepositParams): void {
     setTimeout(() => {
       this.emitRandomVault();
+      this.emitRandomHistory();
     }, 1000);
   }
 
   withdraw(params: WithdrawParams): void {
     setTimeout(() => {
       this.emitRandomVault();
+      this.emitRandomHistory();
     }, 1000);
   }
 

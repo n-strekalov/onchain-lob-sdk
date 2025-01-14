@@ -1,6 +1,6 @@
 import { VaultInfo } from '../models';
 import { EventEmitter } from '../common';
-import { CalculateDepositDetailsSyncParams, CalculateWithdrawDetailsSyncParams, DepositDetails, DepositParams, SubscribeToVaultUpdatesParams, WithdrawDetails, WithdrawParams } from './params';
+import { CalculateDepositDetailsSyncParams, CalculateWithdrawDetailsSyncParams, DepositDetails, DepositParams, SubscribeToVaultUpdatesParams, SubscribeToVaultValueHistoryParams, WithdrawDetails, WithdrawParams } from './params';
 export declare class MockVault {
     subscribeParams: SubscribeToVaultUpdatesParams | undefined;
     constructor();
@@ -14,7 +14,7 @@ export declare class MockVault {
     };
     subscribeToVaultUpdates(params: SubscribeToVaultUpdatesParams): void;
     unsubscribeFromVaultUpdates(): void;
-    subscribeToVaultValueHistory(): void;
+    subscribeToVaultValueHistory(_params: SubscribeToVaultValueHistoryParams): void;
     unsubscribeFromVaultValueHistory(): void;
     calculateDepositDetailsSync(params: CalculateDepositDetailsSyncParams): DepositDetails;
     calculateWithdrawDetailsSync(params: CalculateWithdrawDetailsSyncParams): WithdrawDetails;
